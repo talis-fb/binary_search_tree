@@ -21,18 +21,32 @@ class TreeTest(TestCase):
 #         self.assertEqual(tree.imprimeArvore(1), impressao)
 
     def test_eh_completa(self):
-        tree = BinarySearchTree.from_list([5, 3, 8, 6, 9])
-        self.assertEqual(tree.ehCompleta(), True)  # Assert that the result is equal to 2
+        tree = BinarySearchTree.from_list([5, 3, 8, 6, 10, 9, 2, 1, 4])
+        self.assertEqual(tree.ehCompleta(), True)
+
+        tree = BinarySearchTree.from_list([5, 3, 8, 6, 10, 9, 2, 1, 4, 0])
+        self.assertEqual(tree.ehCompleta(), False)
+
+        tree = BinarySearchTree.from_list([1, 2])
+        self.assertEqual(tree.ehCompleta(), True)
 
         tree = BinarySearchTree.from_list([5, 3, 2, 8, 1, 6, 9])
-        self.assertEqual(tree.ehCompleta(), True)  # Assert that the result is equal to 2
+        self.assertEqual(tree.ehCompleta(), False)
 
-        tree = BinarySearchTree.from_list([5, 3, 8, 6, 9, 10])
-        self.assertEqual(tree.ehCompleta(), False)  # Assert that the result is equal to 2
+        tree = BinarySearchTree.from_list([5, 3, 2, 8, 1, 6, 9 , 4])
+        self.assertEqual(tree.ehCompleta(), True)
+
 
     def test_eh_cheia(self):
         tree = BinarySearchTree.from_list([5, 3, 8, 6, 9])
-        self.assertEqual(tree.ehCheia(), False)  # Assert that the result is equal to 2
+        self.assertEqual(tree.ehCheia(), True)
 
         tree = BinarySearchTree.from_list([5, 3, 2, 8, 1, 6, 9])
-        self.assertEqual(tree.ehCheia(), True)  # Assert that the result is equal to 2
+        self.assertEqual(tree.ehCheia(), False)
+
+    def test_pre_ordem(self):
+        tree = BinarySearchTree.from_list([5, 3, 8, 6, 9])
+        self.assertEqual(tree.pre_ordem(), "5 3 8 6 9")
+
+        tree = BinarySearchTree.from_list([5, 3, 8, 6, 10, 9, 2, 1, 4])
+        self.assertEqual(tree.pre_ordem(), "5 3 2 1 4 8 6 10 9")

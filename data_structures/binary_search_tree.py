@@ -6,25 +6,22 @@ from data_structures.nodes import Node
 class BinarySearchTree:
     root: Optional[Node] = None
 
-    # def insert(self, value: int):
-    #     ...
-
     def insert(self, value: int):
         if self.root is None:
-            self.root = Node(value)
+            self.root = Node(value, height=0)
         else:
             self._insert_recursive(self.root, value)
 
     def _insert_recursive(self, node: Node, value: int):
         if value <= node.value:
             if node.left is None:
-                new_node = Node(value)
+                new_node = Node(value=value, height=node.height+1)
                 node.left = new_node
             else:
                 self._insert_recursive(node.left, value)
         else:
             if node.right is None:
-                new_node = Node(value)
+                new_node = Node(value=value, height=node.height+1)
                 node.right = new_node
             else:
                 self._insert_recursive(node.right, value)
@@ -38,6 +35,35 @@ class BinarySearchTree:
         for v in values:
             tree.insert(v)
         return tree
+
+    def get_height(self) -> int:
+        def _calculate_height_recursive(node: Optional[Node]) -> int:
+            if node is None:
+                return 0
+
+            left_height = _calculate_height_recursive(node.left)
+            right_height = _calculate_height_recursive(node.right)
+
+            return max(left_height, right_height) + 1
+        
+        return _calculate_height_recursive(self.root)
+
+    def get_pre_ordem_list(self) -> list[int]:
+        arr = []
+        def _get_ordem_recursive(node: Optional[Node]):
+            nonlocal arr
+
+            if node is None:
+                return
+
+            arr.append(node.value)
+
+            _get_ordem_recursive(node.left)
+            _get_ordem_recursive(node.right)
+
+        _get_ordem_recursive(self.root)
+
+        return arr
 
     # --------------------
     # Metodos da atividade
@@ -54,66 +80,73 @@ class BinarySearchTree:
             else:
                 return f'({node.value} {left} {right})'
 
-        funcao = to_string1 if s == 1 else to_string2
-        impressao = funcao(self.root)
-        print(impressao)
-        return impressao
+        switch = {
+            1: to_string1,
+            2: to_string2
+        }
+        funcao = switch.get(s)
+
+        saida_para_impressao = funcao(self.root)
+        print(saida_para_impressao)
+        return saida_para_impressao
+
+
 
     def enesimoElemento(self, n: int) -> int:
         ...
 
+
+
     def posicao(self, x: int) -> int:
         ...
+
+
 
     def mediana(self) -> int:
         ...
 
+
+
     def media(self, x: int) -> float:
         ...
 
-    def ehCheia(self) -> bool:
-        return self._eh_cheia_recursiva(self.root)
 
-    def _eh_cheia_recursiva(self, node: Node) -> bool:
-        if node is None:
-            return True
-        if node.left is None and node.right is None:
-            return True
-        if node.left is not None and node.right is not None:
-            return (
-                self._eh_cheia_recursiva(node.left) and
-                self._eh_cheia_recursiva(node.right)
-            )
-        return False
+
+    def ehCheia(self) -> bool:
+        def _eh_cheia_recursiva(node: Optional[Node]) -> bool:
+            if node is None:
+                return True
+            if node.left is None and node.right is None:
+                return True
+            if node.left is not None and node.right is not None:
+                return (
+                    _eh_cheia_recursiva(node.left) and
+                    _eh_cheia_recursiva(node.right)
+                )
+            return False
+
+        return _eh_cheia_recursiva(self.root)
+
+
 
     def ehCompleta(self) -> bool:
-        if self.root is None:
-            return True
+        def is_complete_recursive(node: Optional[Node], node_count: int) -> bool:
+            if node is None:
+                return True
 
-        queue = []
-        queue.append(self.root)
-        has_gap = False
-
-        while queue:
-            current_node = queue.pop(0)
-
-            if current_node.left:
-                if has_gap:
+            if node.right is None or node.left is None:
+                if node.height + 1 < node_count:
                     return False
-                queue.append(current_node.left)
-            else:
-                has_gap = True
 
-            if current_node.right:
-                if has_gap:
-                    return False
-                queue.append(current_node.right)
-            else:
-                has_gap = True
+            return (is_complete_recursive(node.left,  node_count) and
+                    is_complete_recursive(node.right, node_count))
 
-        return True
+        height_first_node = self.get_height() - 1
+        return is_complete_recursive(self.root, height_first_node)
+
 
 
     def pre_ordem(self) -> str:
-        ...
+        pre_ordem_list = self.get_pre_ordem_list()
+        return ' '.join(map(str, pre_ordem_list))
 
