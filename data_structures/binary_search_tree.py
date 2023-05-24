@@ -8,28 +8,54 @@ from collections import deque
 class BinarySearchTree:
     root: Optional[Node] = None
 
+    def _find_min(self, node: Node):
+        while node.left is not None:
+            node = node.left
+        return node
+
+    def _get_height(self, node: Node):
+        if node is None:
+            return -1
+        return node.height
+
     def insert(self, value: int):
         if self.root is None:
             self.root = Node(value, height=0)
         else:
-            self._insert_recursive(self.root, value)
+            self.root = self._insert_recursive(self.root, value)
 
-    def _insert_recursive(self, node: Node, value: int):
-        if value <= node.value:
-            if node.left is None:
-                new_node = Node(value=value, height=node.height+1)
-                node.left = new_node
-            else:
-                self._insert_recursive(node.left, value)
+    def _insert_recursive(self, node, value):
+        if node is None:
+            return Node(value)
+        if value < node.value:
+            node.left = self._insert_recursive(node.left, value)
         else:
-            if node.right is None:
-                new_node = Node(value=value, height=node.height+1)
-                node.right = new_node
-            else:
-                self._insert_recursive(node.right, value)
+            node.right = self._insert_recursive(node.right, value)
+
+        node.height = 1 + max(self._get_height(node.left), self._get_height(node.right))
+        return node
 
     def remove(self, value: int):
-        ...
+        self.root = self._remove_recursive(self.root, value)
+
+    def _remove_recursive(self, node: Node, value: int):
+        if node is None:
+            return node
+        if value < node.value:
+            node.left = self._remove_recursive(node.left, value)
+        elif value > node.value:
+            node.right = self._remove_recursive(node.right, value)
+        else:
+            if node.left is None:
+                return node.right
+            elif node.right is None:
+                return node.left
+            min_right = self._find_min(node.right)
+            node.value = min_right.value
+            node.right = self._remove_recursive(node.right, min_right.value)
+
+        node.height = 1 + max(self._get_height(node.left), self._get_height(node.right))
+        return node
 
     @staticmethod
     def from_list(values: list[int]):
@@ -145,6 +171,17 @@ class BinarySearchTree:
     def posicao(self, x: int) -> int:
         ordem_simetrica: list[int] = self.get_ordem_simetrica()
         return ordem_simetrica.index(x) + 1
+    
+    def search(self, value: int) -> Node:
+        return self._search_recursive(value, self.root)
+
+    def _search_recursive(self, value: int, node: Node) -> Node:
+        if node is None or node.value == value:
+            return node
+        if value < node.value:
+            return self._search_recursive(value, node.left)
+        return self._search_recursive(value, node.right)
+
 
     def mediana(self) -> int:
         ...
