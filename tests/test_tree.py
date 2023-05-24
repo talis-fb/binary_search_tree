@@ -8,18 +8,11 @@ class TreeTest(TestCase):
         impressao =  "(5 (3) (8 (6) (9)))"
         self.assertEqual(tree.imprimeArvore(2), impressao)
 
-#     def test_impressao1(self):
-#         tree = BinarySearchTree.from_list([5, 3, 8, 6, 9])
-#         self.assertEqual(tree.imprimeArvore(2), "(5 (3) (8 (6) (9)))")  # Assert that the result is equal to 2
-#
-#         impressao = '''5 -----------
-# \t3 ---------
-# \t\t8 -------
-# \t\t\t6 -----
-# \t\t\t\t9 ---
-#         '''
-#
-#         self.assertEqual(tree.imprimeArvore(1), impressao)
+    def test_impressao1(self):
+        tree = BinarySearchTree.from_list([5, 3, 8, 6, 9])
+        self.assertEqual(tree.imprimeArvore(2), "(5 (3) (8 (6) (9)))")  # Assert that the result is equal to 2
+        impressao = "5------------------------\n\t3----------------\n\t8----------------\n\t\t6--------\n\t\t9--------\n"
+        self.assertEqual(tree.imprimeArvore(1), impressao)
 
     def test_eh_completa(self):
         tree = BinarySearchTree.from_list([5, 3, 8, 6, 10, 9, 2, 1, 4])
