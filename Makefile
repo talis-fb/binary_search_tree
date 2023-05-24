@@ -1,5 +1,5 @@
 run:
-	python main.py
+	test -e /bin/pyton && python main.py  || python3 main.py
 
 test: 
-	python -m unittest discover tests
+	test -e /bin/pyton && python -m unittest discover tests  || python3 -m unittest discover tests
