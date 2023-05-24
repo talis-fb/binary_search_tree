@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from typing import Optional
 from data_structures.nodes import Node
+from collections import deque
+
 
 @dataclass
 class BinarySearchTree:
@@ -64,6 +66,52 @@ class BinarySearchTree:
         _get_ordem_recursive(self.root)
 
         return arr
+    
+    def node_by_value(self, x: int) -> Node:
+        stack = deque()
+        node: Node = self.root
+        while stack or node:
+            if node != None and node.value == x:
+                break
+            if node:
+                stack.append(node)
+                node = node.left
+            else:
+                node = stack.pop()
+                node = node.right
+        return node
+    
+    def get_sub_tree_pre_ordem(self, x: int):
+        arr: list[int] = []
+        def _get_ordem_recursive(node: Optional[Node]):
+            nonlocal arr
+
+            if node is None:
+                return
+
+            arr.append(node.value)
+
+            _get_ordem_recursive(node.left)
+            _get_ordem_recursive(node.right)
+        
+        node: Node = self.node_by_value(x)
+        _get_ordem_recursive(node)
+        return arr
+       
+    def get_ordem_simetrica(self, i:int=-1) -> list[int]:
+        arr: list[int] = []
+        stack = deque()
+        node: Node = self.root
+        while (stack or node) and i != 0:
+            if node:
+                stack.append(node)
+                node = node.left
+            else:
+                node = stack.pop()
+                i -= 1
+                arr.append(node.value)
+                node = node.right
+        return arr
 
     # --------------------
     # Metodos da atividade
@@ -87,31 +135,24 @@ class BinarySearchTree:
         funcao = switch.get(s)
 
         saida_para_impressao = funcao(self.root)
-        print(saida_para_impressao)
+        # print(saida_para_impressao)
         return saida_para_impressao
 
-
-
     def enesimoElemento(self, n: int) -> int:
-        ...
-
-
+        pre_ordem: list[int] = self.get_ordem_simetrica(n)
+        return pre_ordem[-1]
 
     def posicao(self, x: int) -> int:
-        ...
-
-
+        ordem_simetrica: list[int] = self.get_ordem_simetrica()
+        return ordem_simetrica.index(x) + 1
 
     def mediana(self) -> int:
         ...
 
-
-
     def media(self, x: int) -> float:
-        ...
-
-
-
+        new_tree_pre_ordem = self.get_sub_tree_pre_ordem(x)
+        return sum(new_tree_pre_ordem)/len(new_tree_pre_ordem)
+        
     def ehCheia(self) -> bool:
         def _eh_cheia_recursiva(node: Optional[Node]) -> bool:
             if node is None:
@@ -126,8 +167,6 @@ class BinarySearchTree:
             return False
 
         return _eh_cheia_recursiva(self.root)
-
-
 
     def ehCompleta(self) -> bool:
         def is_complete_recursive(node: Optional[Node], node_count: int) -> bool:
@@ -144,9 +183,6 @@ class BinarySearchTree:
         height_first_node = self.get_height() - 1
         return is_complete_recursive(self.root, height_first_node)
 
-
-
     def pre_ordem(self) -> str:
         pre_ordem_list = self.get_pre_ordem_list()
         return ' '.join(map(str, pre_ordem_list))
-
