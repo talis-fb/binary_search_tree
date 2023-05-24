@@ -143,12 +143,22 @@ class BinarySearchTree:
     # Metodos da atividade
     # --------------------
     def imprimeArvore(self, s: int) -> str:
-        def to_string1(node: Node) -> str:
-            return ""
+        h = self.root.height
+        def to_string1(node: Node, t: int=0) -> str:
+            left = to_string1((node.left), t+1) if node.left else ''
+            right = to_string1((node.right), t+1) if node.right else ''
+            tab ="\t"
+            line = "--------"
+            new = f'{t*tab}{node.value}'
+            if not left and not right:
+                return f'{new}{(h-t+1)*line}\n'
+            else:
+                return f'{new}{(h-t+1)*line}\n{left}{right}'
 
         def to_string2(node: Node) -> str:
             left = to_string2((node.left)) if node.left else ''
             right = to_string2((node.right)) if node.right else ''
+
             if not left and not right:
                 return f'({node.value})'
             else:
