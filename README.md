@@ -10,7 +10,7 @@ Membros:
 
 É necessário ter o Python instalado na máquina. Versão 3.10.
 
-Para verificar se o python está instalado basta rodar o comando `python`. A saída esperada deve semelhante à seguinte:
+Para verificar se o python está instalado basta rodar o comando `python`. A saída esperada deve ser semelhante à seguinte:
 ```python
 Python 3.10.5 (main, Jun 23 2022, 17:15:25) [Clang 13.1.6 (clang-1316.0.21.2.5)] on darwin
 Type "help", "copyright", "credits" or "license" for more information.
