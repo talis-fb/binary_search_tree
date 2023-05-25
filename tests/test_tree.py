@@ -77,6 +77,13 @@ class TreeTest(TestCase):
 
         self.assertEqual(tree.media(5), 6.2)
 
+
+    def test_mediana(self):
+        tree = BinarySearchTree.from_list([50, 30, 23, 40, 70, 69, 88])
+        self.assertEqual(tree.mediana(), 50)
+        tree = BinarySearchTree.from_list([10, 50, 30, 23, 40, 69])
+        self.assertEqual(tree.mediana(), 40)
+
         
     def test_posicao(self):
         tree = BinarySearchTree.from_list([5, 3, 8, 6, 9])

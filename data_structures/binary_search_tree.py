@@ -197,9 +197,72 @@ class BinarySearchTree:
             return self._search_recursive(value, node.left)
         return self._search_recursive(value, node.right)
 
+    def mediana(self) -> Node:
+        if self.root is None:
+            return None
 
-    def mediana(self) -> int:
-        ...
+        total_nodes = self._count_nodes(self.root)
+        middle = total_nodes // 2
+
+        if total_nodes % 2 == 0:
+            node1, node2 = self._find_middle_nodes(self.root, middle)
+            return node1.value
+        else:
+            middle_node = self._find_middle_node(self.root, middle)
+            return middle_node.value
+
+    def _count_nodes(self, node: Node) -> int:
+        if node is None:
+            return 0
+        return 1 + self._count_nodes(node.left) + self._count_nodes(node.right)
+
+
+    def _find_middle_node(self, node: Node, middle: int) -> Node:
+        stack = []
+        count = 0
+        current = node
+
+        while True:
+            if current is not None:
+                stack.append(current)
+                current = current.left
+            elif stack:
+                current = stack.pop()
+                if count == middle:
+                    return current
+                current = current.right
+                count += 1
+            else:
+                break
+
+        return None
+
+
+    def _find_middle_nodes(self, node: Node, middle: int) -> list[Node]:
+        stack = []
+        count = 0
+        current = node
+        prev = None
+        nodes = []
+
+        while True:
+            if current is not None:
+                stack.append(current)
+                current = current.left
+            elif stack:
+                current = stack.pop()
+                if count == middle:
+                    nodes.append(current)
+                elif count > middle:
+                    nodes.append(prev)
+                    break
+                prev = current
+                current = current.right
+                count += 1
+            else:
+                break
+
+        return nodes
 
     def media(self, x: int) -> float:
         new_tree_pre_ordem = self.get_sub_tree_pre_ordem(x)
