@@ -33,6 +33,7 @@ class TreeTest(TestCase):
         tree = BinarySearchTree.from_list([5, 3, 2, 8, 1, 6, 9, 4])
         self.assertFalse(tree.ehCompleta())
 
+
     def test_remove(self):
         tree = BinarySearchTree.from_list([5, 3, 8, 6, 10, 9, 2, 1, 4])
         tree.remove(3)
