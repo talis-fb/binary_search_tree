@@ -41,7 +41,11 @@ class BinarySearchTree:
         return node
 
     def remove(self, value: int):
+        node = self.search(value)
+        if node is None:
+            return f"Elemento {value} não pode ser excluído, pois não pertence à árvore."
         self.root = self._remove_recursive(self.root, value)
+        return f"Elemento {value} removido."
 
     def _remove_recursive(self, node: Node, value: int):
         if node is None:
