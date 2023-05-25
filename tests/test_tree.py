@@ -92,3 +92,8 @@ class TreeTest(TestCase):
         self.assertEqual(tree.posicao(3), 1)
 
         self.assertEqual(tree.posicao(9), 5)
+
+    def test_elemento_repetido(self):
+        tree = BinarySearchTree.from_list([5, 3, 8, 3, 6, 5, 3, 3, 6, 6, 9])
+        impressao =  "(5 (3) (8 (6) (9)))"
+        self.assertEqual(tree.imprimeArvore(2), impressao)
