@@ -102,20 +102,6 @@ class BinarySearchTree:
 
         return arr
     
-    def node_by_value(self, x: int) -> Node:
-        stack = deque()
-        node: Node = self.root
-        while stack or node:
-            if node != None and node.value == x:
-                break
-            if node:
-                stack.append(node)
-                node = node.left
-            else:
-                node = stack.pop()
-                node = node.right
-        return node
-    
     def get_sub_tree_pre_ordem(self, x: int):
         arr: list[int] = []
         def _get_ordem_recursive(node: Optional[Node]):
@@ -129,7 +115,7 @@ class BinarySearchTree:
             _get_ordem_recursive(node.left)
             _get_ordem_recursive(node.right)
         
-        node: Node = self.node_by_value(x)
+        node: Node = self.search(x)
         _get_ordem_recursive(node)
         return arr
        
