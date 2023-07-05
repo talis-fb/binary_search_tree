@@ -6,4 +6,5 @@ class Node:
     value: int
     left: Optional['Node'] = None
     right: Optional['Node'] = None
+    parent: Optional['Node'] = None
     height: int = 0

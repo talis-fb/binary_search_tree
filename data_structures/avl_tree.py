@@ -4,14 +4,6 @@ from data_structures.binary_search_tree import BinarySearchTree
 from data_structures.nodes import Node
 
 @dataclass
-class Node:
-    value: int
-    left: Optional['Node'] = None
-    right: Optional['Node'] = None
-    parent: Optional['Node'] = None
-    height: int = 1
-
-@dataclass
 class AvlTree(BinarySearchTree):
     root: Optional[Node] = None
 
@@ -26,7 +18,7 @@ class AvlTree(BinarySearchTree):
 
     def _insert(self, node: Optional[Node], value: int) -> Optional[Node]:
         if node is None:
-            return Node(value)
+            return Node(value, height=1)
 
         if value < node.value:
             node.left = self._insert(node.left, value)
