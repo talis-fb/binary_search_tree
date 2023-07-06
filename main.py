@@ -1,4 +1,4 @@
-from data_structures.binary_search_tree import BinarySearchTree
+from data_structures.avl_tree import AvlTree
 from data_structures.nodes import Node
 import sys
 
@@ -31,6 +31,10 @@ COMMANDS = {
     },
     "REMOVA": {
         "fn_name": "remove",
+        "need_parameter": True,
+    },
+    "ADICIONA": {
+        "fn_name": "insert",
         "need_parameter": True,
     },
 }
@@ -82,14 +86,17 @@ if __name__ == '__main__':
     print('Comandos para executar....: ', text_list)
     print('')
 
-    tree = BinarySearchTree.from_list(numbers_list)
+    tree = AvlTree()
+
+    for number_to_insert in numbers_list:
+        tree.insert(number_to_insert)
 
     for command_name, parameter in text_list:
 
-        method_name_of_comaand = COMMANDS[command_name]["fn_name"]
+        method_name_of_command = COMMANDS[command_name]["fn_name"]
         need_parameter = COMMANDS[command_name]["need_parameter"]
 
-        method_to_call = getattr(tree, method_name_of_comaand)
+        method_to_call = getattr(tree, method_name_of_command)
 
         if need_parameter:
             output = method_to_call(parameter)

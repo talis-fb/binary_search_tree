@@ -9,9 +9,11 @@ class AvlTree(BinarySearchTree):
 
     def insert(self, value: int):
         self.root = self._insert(self.root, value)
+        return f"Elemento {value} adicionado."
 
     def remove(self, value: int):
         self.root = self._remove(self.root, value)
+        return f"Elemento {value} removido."
 
     def search(self, value: int) -> Optional[Node]:
         return self._search(self.root, value)
