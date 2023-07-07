@@ -1,4 +1,4 @@
-# Binary Search Tree
+# AVL Tree
 
 Membros:
 
@@ -36,8 +36,8 @@ Ele, por baixo dos panos, executa o comando abaixo, passando os arquivos na past
 python main.py examples/tree1.txt examples/commands1.txt
 ```
 
-Sendo assim, é possivel também rodar o comando acima passando arquivos personalizados (ao invés de usar o `make run`). Seguindo o padrão do comando
+Sendo assim, é possível também rodar o comando acima passando arquivos personalizados (ao invés de usar o `make run`). Seguindo o padrão do comando
 
 ```
-python main.py <arquivo_com_numeros_da_arvore> <arquivo_com_comandos_para_executar>
+python main.py <arquivo_com_números_da_arvore> <arquivo_com_comandos_para_executar>
 ```
