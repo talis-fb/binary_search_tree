@@ -72,7 +72,7 @@ if __name__ == '__main__':
     print(" =--------------------------------------------------------------------------------= ")
 
     if len(sys.argv) != 3:
-        print('Usage: python script.py <arquivo_com_numeros_da_arvore> <arquivo_com_comandos_para_executar>')
+        print('Usage: python script.py <arquivo_com_números_da_arvore> <arquivo_com_comandos_para_executar>')
         sys.exit(1)
     
     numbers_file_path = sys.argv[1]
